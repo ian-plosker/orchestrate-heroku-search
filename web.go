@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+
+	"github.com/yvasiyarov/gorelic"
 )
 
 var (
@@ -15,6 +17,11 @@ var (
 )
 
 func main() {
+	agent := gorelic.NewAgent()
+	agent.Verbose = true
+	agent.NewrelicLicense = "d4a79ebced44db73abde4038c5ba0ba2fb31b5a8"
+	agent.Run()
+
 	port := os.Getenv("PORT")
 
 	http.HandleFunc("/", search)

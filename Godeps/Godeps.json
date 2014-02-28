@@ -5,6 +5,19 @@
 		{
 			"ImportPath": "client",
 			"Rev": "c2b85174f0882b6971858091fae5cc3795f8f69b"
+		},
+		{
+			"ImportPath": "github.com/yvasiyarov/go-metrics",
+			"Rev": "b23f8b043b6492e7aef34eb11aab268a5c89c14b"
+		},
+		{
+			"ImportPath": "github.com/yvasiyarov/gorelic",
+			"Comment": "v0.0.4",
+			"Rev": "b537cedaed74a12ba50ea25074705e275da7aa7e"
+		},
+		{
+			"ImportPath": "github.com/yvasiyarov/newrelic_platform_go",
+			"Rev": "2d5b3d6e6db42e361ca5a5b6376a1368f7067236"
 		}
 	]
 }
