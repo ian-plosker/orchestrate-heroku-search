@@ -27,6 +27,8 @@ func main() {
 }
 
 func search(res http.ResponseWriter, req *http.Request) {
+	res.Header().Set("Access-Control-Allow-Origin", "*")
+
 	query := req.FormValue("query")
 
 	var limit, offset int64
