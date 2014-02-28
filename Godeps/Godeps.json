@@ -1,0 +1,10 @@
+{
+	"ImportPath": "enron",
+	"GoVersion": "go1.2",
+	"Deps": [
+		{
+			"ImportPath": "client",
+			"Rev": "c2b85174f0882b6971858091fae5cc3795f8f69b"
+		}
+	]
+}
