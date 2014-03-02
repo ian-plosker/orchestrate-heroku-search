@@ -23,6 +23,8 @@ func main() {
 
 func search(ctx *web.Context) {
 	ctx.ContentType("json")
+	ctx.SetHeader("Access-Control-Allow-Origin", "*", true)
+
 
 	query := ctx.Params["query"]
 
