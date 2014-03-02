@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"client"
 	"encoding/json"
-	"fmt"
-	"net/http"
+	"log"
 	"os"
 	"strconv"
+	"github.com/hoisie/web"
 )
 
 var (
@@ -16,28 +16,23 @@ var (
 
 func main() {
 	port := os.Getenv("PORT")
-
-	http.HandleFunc("/", search)
-	fmt.Printf("Listening on port %v ...\n", port)
-	err := http.ListenAndServe(":"+port, nil)
-
-	if err != nil {
-		panic(err)
-	}
+	log.Printf("Listening on port %v ...", port)
+	web.Get("/", search)
+	web.Run(":"+port)
 }
 
-func search(res http.ResponseWriter, req *http.Request) {
-	res.Header().Set("Access-Control-Allow-Origin", "*")
+func search(ctx *web.Context) {
+	ctx.ContentType("json")
 
-	query := req.FormValue("query")
+	query := ctx.Params["query"]
 
 	var limit, offset int64
 	var err error
 
-	if limit, err = strconv.ParseInt(req.FormValue("limit"), 10, 32); err != nil {
+	if limit, err = strconv.ParseInt(ctx.Params["limit"], 10, 32); err != nil {
 		limit = 10
 }
-	if offset, err = strconv.ParseInt(req.FormValue("offset"), 10, 32); err != nil {
+	if offset, err = strconv.ParseInt(ctx.Params["offset"], 10, 32); err != nil {
 		offset = 0
 	}
 
@@ -45,15 +40,12 @@ func search(res http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		status, _ := strconv.ParseInt(err.(*client.OrchestrateError).Status[0:3], 10, 32)
-
-		http.Error(res, err.Error(), int(status))
-		return
+		ctx.Abort(int(status), err.Error())
 	}
 
 	buf := new(bytes.Buffer)
 	encoder := json.NewEncoder(buf)
 	encoder.Encode(results)
 
-	res.Header().Set("Content-Type", "application/json")
-	res.Write(buf.Bytes())
+	ctx.Write(buf.Bytes())
 }

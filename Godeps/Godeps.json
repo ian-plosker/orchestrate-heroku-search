@@ -5,6 +5,16 @@
 		{
 			"ImportPath": "client",
 			"Rev": "c2b85174f0882b6971858091fae5cc3795f8f69b"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.net/websocket",
+			"Comment": "null-116",
+			"Rev": "89dbba2db2d45f337bb06f974ec45d3c426a5072"
+		},
+		{
+			"ImportPath": "github.com/hoisie/web",
+			"Comment": "v0.1.0-157-g5a66d0f",
+			"Rev": "5a66d0fa07a54688eba8fa506576a78a942ef243"
 		}
 	]
 }
