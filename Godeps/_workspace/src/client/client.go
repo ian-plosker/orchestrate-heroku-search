@@ -19,9 +19,10 @@ type Client struct {
 }
 
 type OrchestrateError struct {
-	Status  string
+	Status  string `json:"-"`
+	StatusCode int `json:"-"`
 	Message string `json:"message"`
-	Locator string `json:"locator"`
+	Code string 	 `json:"code"`
 }
 
 // NewClient returns a new orchestrate client.
@@ -40,6 +41,7 @@ func newError(resp *http.Response) error {
 	decoder.Decode(orchestrateError)
 
 	orchestrateError.Status = resp.Status
+	orchestrateError.StatusCode = resp.StatusCode
 
 	return orchestrateError
 }

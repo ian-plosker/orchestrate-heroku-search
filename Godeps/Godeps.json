@@ -4,7 +4,7 @@
 	"Deps": [
 		{
 			"ImportPath": "client",
-			"Rev": "c2b85174f0882b6971858091fae5cc3795f8f69b"
+			"Rev": "e062a13f0f50d6e0d2105f51abec3c6e033325b7"
 		},
 		{
 			"ImportPath": "code.google.com/p/go.net/websocket",
