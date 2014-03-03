@@ -1,4 +1,4 @@
-enron
-=====
+orchestrate-heroku-search
+=========================
 
-Enron Demo App
+This small golang application provides a simple way to search Orchestrate apps over the web without needing credentials.
