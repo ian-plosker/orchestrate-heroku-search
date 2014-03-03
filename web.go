@@ -17,11 +17,11 @@ var (
 func main() {
 	port := os.Getenv("PORT")
 	log.Printf("Listening on port %v ...", port)
-	web.Get("/", search)
+	web.Get("/([^/]+/?)", search)
 	web.Run(":" + port)
 }
 
-func search(ctx *web.Context) {
+func search(ctx *web.Context, collection string) {
 	ctx.ContentType("json")
 	ctx.SetHeader("Access-Control-Allow-Origin", "*", true)
 
@@ -38,7 +38,7 @@ func search(ctx *web.Context) {
 		offset = 0
 	}
 
-	results, err := c.Search("emails", query, int(limit), int(offset))
+	results, err := c.Search(collection, query, int(limit), int(offset))
 
 	buf := new(bytes.Buffer)
 	encoder := json.NewEncoder(buf)
