@@ -25,7 +25,6 @@ func search(ctx *web.Context, collection string) {
 	ctx.ContentType("json")
 	ctx.SetHeader("Access-Control-Allow-Origin", "*", true)
 
-
 	query := ctx.Params["query"]
 
 	var limit, offset int64
