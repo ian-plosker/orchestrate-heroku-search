@@ -1,8 +1,9 @@
+// Copyright 2014, Orchestrate.IO, Inc.
+
 package client
 
 import (
 	"encoding/json"
-	"log"
 	"net/url"
 	"strconv"
 )
@@ -25,7 +26,7 @@ type ResultPath struct {
 	Ref        string `json:"ref"`
 }
 
-func (client Client) Search(collection string, query string, limit int, offset int) (*SearchResults, error) {
+func (client *Client) Search(collection string, query string, limit int, offset int) (*SearchResults, error) {
 	queryVariables := url.Values{
 		"query":  []string{query},
 		"limit":  []string{strconv.Itoa(limit)},
@@ -33,9 +34,7 @@ func (client Client) Search(collection string, query string, limit int, offset i
 	}
 
 	resp, err := client.doRequest("GET", collection+"?"+queryVariables.Encode(), nil)
-
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
 
@@ -46,12 +45,10 @@ func (client Client) Search(collection string, query string, limit int, offset i
 	}
 
 	decoder := json.NewDecoder(resp.Body)
-	results := new(SearchResults)
-	err = decoder.Decode(results)
-
-	if err != nil {
-		log.Fatal(err)
+	result := new(SearchResults)
+	if err := decoder.Decode(result); err != nil {
+		return result, err
 	}
 
-	return results, err
+	return result, nil
 }

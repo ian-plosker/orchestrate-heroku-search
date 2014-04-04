@@ -1,9 +1,10 @@
+// Copyright 2014, Orchestrate.IO, Inc.
+
 package client
 
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"strings"
 )
 
@@ -19,13 +20,12 @@ type GraphResult struct {
 	Value map[string]interface{} `json:"value"`
 }
 
-func (client Client) GetRelations(collection string, key string, hops []string) (*GraphResults, error) {
+func (client *Client) GetRelations(collection string, key string, hops []string) (*GraphResults, error) {
 	relationsPath := strings.Join(hops, "/")
 
 	resp, err := client.doRequest("GET", fmt.Sprintf("%v/%v/relations/%v", collection, key, relationsPath), nil)
 
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
 
@@ -37,28 +37,24 @@ func (client Client) GetRelations(collection string, key string, hops []string) 
 
 	decoder := json.NewDecoder(resp.Body)
 	result := new(GraphResults)
-	err = decoder.Decode(result)
-
-	if err != nil {
-		log.Fatal(err)
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
 	}
 
-	return result, err
+	return result, nil
 }
 
-func (client Client) PutRelation(sourceCollection string, sourceKey string, kind string, sinkCollection string, sinkKey string) error {
+func (client *Client) PutRelation(sourceCollection string, sourceKey string, kind string, sinkCollection string, sinkKey string) error {
 	resp, err := client.doRequest("PUT", fmt.Sprintf("%v/%v/relation/%v/%v/%v", sourceCollection, sourceKey, kind, sinkCollection, sinkKey), nil)
 
 	if err != nil {
-		log.Fatal(err)
 		return err
 	}
 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 204 {
-		err = newError(resp)
+		return newError(resp)
 	}
-
-	return err
+	return nil
 }

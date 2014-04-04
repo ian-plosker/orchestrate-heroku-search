@@ -3,6 +3,9 @@ orchestrate-go-client
 
 A golang client for Orchestrate.io
 
+Go Style Documentation:
+[http://godoc.org/github.com/orchestrate-io/orchestrate-go-client](http://godoc.org/github.com/orchestrate-io/orchestrate-go-client)]
+
 Usage examples
 
 ```go

@@ -1,16 +1,16 @@
+// Copyright 2014, Orchestrate.IO, Inc.
+
 package client
 
 import (
 	"bytes"
 	"encoding/json"
-	"log"
 )
 
-func (client Client) Get(collection string, key string, value interface{}) error {
+func (client *Client) Get(collection string, key string, value interface{}) error {
 	resp, err := client.doRequest("GET", collection+"/"+key, nil)
 
 	if err != nil {
-		log.Fatal(err)
 		return err
 	}
 
@@ -26,7 +26,7 @@ func (client Client) Get(collection string, key string, value interface{}) error
 	return err
 }
 
-func (client Client) Put(collection string, key string, value interface{}) error {
+func (client *Client) Put(collection string, key string, value interface{}) error {
 	buf := new(bytes.Buffer)
 	encoder := json.NewEncoder(buf)
 	encoder.Encode(value)
@@ -34,15 +34,29 @@ func (client Client) Put(collection string, key string, value interface{}) error
 	resp, err := client.doRequest("PUT", collection+"/"+key, buf)
 
 	if err != nil {
-		log.Fatal(err)
 		return err
 	}
 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 201 {
-		err = newError(resp)
+		return newError(resp)
 	}
 
-	return err
+	return nil
+}
+
+func (client *Client) Delete(collection, key string) error {
+	resp, err := client.doRequest("DELETE", collection+"/"+key, nil)
+	if err != nil {
+		return err
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 204 {
+		return newError(resp)
+	}
+
+	return nil
 }

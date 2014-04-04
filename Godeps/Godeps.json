@@ -1,10 +1,10 @@
 {
-	"ImportPath": "enron",
-	"GoVersion": "go1.2",
+	"ImportPath": "orchestrate-heroku-search",
+	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
 			"ImportPath": "client",
-			"Rev": "e062a13f0f50d6e0d2105f51abec3c6e033325b7"
+			"Rev": "874fc6dfd906035dbfcade14a5dca90e9f7cf602"
 		},
 		{
 			"ImportPath": "code.google.com/p/go.net/websocket",
