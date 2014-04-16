@@ -1,0 +1,13 @@
+language: go
+
+go:
+  - 1.1
+  - 1.2
+
+notifications:
+  email: false
+  hipchat:
+    rooms:
+      - c92bad93fc0d9c2d195d80c7be121a@Orchestrate
+    template:
+      - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} %{build_url}'

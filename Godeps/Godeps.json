@@ -3,10 +3,6 @@
 	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
-			"ImportPath": "client",
-			"Rev": "874fc6dfd906035dbfcade14a5dca90e9f7cf602"
-		},
-		{
 			"ImportPath": "code.google.com/p/go.net/websocket",
 			"Comment": "null-116",
 			"Rev": "89dbba2db2d45f337bb06f974ec45d3c426a5072"
@@ -15,6 +11,10 @@
 			"ImportPath": "github.com/hoisie/web",
 			"Comment": "v0.1.0-157-g5a66d0f",
 			"Rev": "5a66d0fa07a54688eba8fa506576a78a942ef243"
+		},
+		{
+			"ImportPath": "github.com/orchestrate-io/gorc",
+			"Rev": "2f9ba83b1b28dccbd6d2718b00f7b567df1bfcaf"
 		}
 	]
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"client"
+	"github.com/orchestrate-io/gorc"
 	"encoding/json"
 	"github.com/hoisie/web"
 	"log"
@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	c = client.NewClient(os.Getenv("ORC_KEY"))
+	c = gorc.NewClient(os.Getenv("ORC_KEY"))
 )
 
 func main() {
@@ -44,7 +44,7 @@ func search(ctx *web.Context, collection string) {
 
 	if err != nil {
 		encoder.Encode(err)
-		ctx.WriteHeader(err.(*client.OrchestrateError).StatusCode)
+		ctx.WriteHeader(err.(*gorc.OrchestrateError).StatusCode)
 	} else {
 		encoder.Encode(results)
 	}
