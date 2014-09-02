@@ -6,7 +6,7 @@ A golang client for Orchestrate.io
 Supports go 1.1 or later
 
 Go Style Documentation:
-[http://godoc.org/github.com/orchestrate-io/gorc](http://godoc.org/github.com/orchestrate-io/gorc)]
+[http://godoc.org/github.com/orchestrate-io/gorc](http://godoc.org/github.com/orchestrate-io/gorc)
 
 Usage examples
 

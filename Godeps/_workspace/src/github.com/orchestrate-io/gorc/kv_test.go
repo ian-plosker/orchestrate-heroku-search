@@ -30,7 +30,7 @@ func TestKVTrailingGetUri(t *testing.T) {
 	}
 }
 
-func TestKVTrailingPetUri(t *testing.T) {
+func TestKVTrailingPutUri(t *testing.T) {
 	f := func(path *Path) bool {
 		return path.trailingPutURI() == path.Collection+"/"+path.Key
 	}

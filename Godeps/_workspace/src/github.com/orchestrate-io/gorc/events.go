@@ -32,15 +32,22 @@ func (c *Client) GetEvents(collection, key, kind string) (*EventResults, error) 
 // Get all events of a particular type from specified collection-key pair in a
 // range.
 func (c *Client) GetEventsInRange(collection, key, kind string, start int64, end int64) (*EventResults, error) {
+	return c.GetEventsInRangeWithLimit(collection, key, kind, start, end, 10)
+}
+
+// Get all events of a particular type from a specified collection-key in a range with a limit
+func (c *Client) GetEventsInRangeWithLimit(collection, key, kind string, start, end, limit int64) (*EventResults, error) {
 	queryVariables := url.Values{
 		"start": []string{strconv.FormatInt(start, 10)},
 		"end":   []string{strconv.FormatInt(end, 10)},
+		"limit": []string{strconv.FormatInt(limit, 10)},
 	}
 
 	trailingUri := collection + "/" + key + "/events/" + kind + "?" + queryVariables.Encode()
 
 	return c.doGetEvents(trailingUri)
 }
+
 
 // Put an event of the specified type to provided collection-key pair.
 func (c *Client) PutEvent(collection, key, kind string, value interface{}) error {

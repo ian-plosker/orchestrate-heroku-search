@@ -20,6 +20,14 @@ import (
 	"time"
 )
 
+// For older go releases (specifically 1.2 and earlier) there is an issue with
+// COMODO certificates since they sign with sha384 which is not included by
+// default. As such we force include the package to get the support. On newer
+// golang installs this does nothing.
+// For more information see this blog post:
+//  http://bridge.grumpy-troll.org/2014/05/golang-tls-comodo/
+import _ "crypto/sha512"
+
 const (
 	// The root path for all API endpoints.
 	rootUri = "https://api.orchestrate.io/v0/"
@@ -96,6 +104,20 @@ func NewClientWithTransport(authToken string, transport *http.Transport) *Client
 		httpClient: &http.Client{Transport: transport},
 		authToken:  authToken,
 	}
+}
+
+// Check that Orchestrate is reachable.
+func (c *Client) Ping() error {
+	resp, err := c.doRequest("HEAD", "", nil, nil)
+	if err != nil {
+		return err
+	}
+
+	if resp.StatusCode != 200 {
+		return newError(resp)
+	}
+
+	return nil
 }
 
 // Creates a new OrchestrateError from a given http.Response object.

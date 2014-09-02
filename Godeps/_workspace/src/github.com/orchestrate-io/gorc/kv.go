@@ -5,6 +5,7 @@ package gorc
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"strconv"
@@ -50,7 +51,10 @@ func (c *Client) GetPath(path *Path) (*KVResult, error) {
 	}
 
 	if path.Ref == "" {
-		path.Ref = strings.SplitAfter(resp.Header.Get("Content-Location"), "/")[5]
+		parts := strings.SplitAfter(resp.Header.Get("Content-Location"), "/")
+		if len(parts) >= 6 {
+			path.Ref = parts[5]
+		}
 	}
 
 	return &KVResult{Path: *path, RawValue: buf.Bytes()}, nil
@@ -119,7 +123,13 @@ func (c *Client) doPut(path *Path, headers map[string]string, value io.Reader) (
 		return nil, newError(resp)
 	}
 
-	ref := strings.SplitAfter(resp.Header.Get("Location"), "/")[5]
+	ref := ""
+	parts := strings.SplitAfter(resp.Header.Get("Location"), "/")
+	if len(parts) >= 6 {
+		ref = parts[5]
+	} else {
+		return nil, fmt.Errorf("Missing ref component: %s", resp.Header.Get("Location"))
+	}
 
 	return &Path{
 		Collection: path.Collection,
@@ -200,6 +210,20 @@ func (c *Client) ListStart(collection, start string, limit int) (*KVResults, err
 	queryVariables := url.Values{
 		"limit":    []string{strconv.Itoa(limit)},
 		"startKey": []string{start},
+	}
+
+	trailingUri := collection + "?" + queryVariables.Encode()
+
+	return c.doList(trailingUri)
+}
+
+// List the values in a collection within a given range of keys, starting with the
+// specified key and stopping at the end key
+func (c *Client) ListRange(collection, start, end string, limit int) (*KVResults, error) {
+	queryVariables := url.Values{
+		"limit":    []string{strconv.Itoa(limit)},
+		"startKey": []string{start},
+		"endKey":   []string{end},
 	}
 
 	trailingUri := collection + "?" + queryVariables.Encode()

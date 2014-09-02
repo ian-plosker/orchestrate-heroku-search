@@ -4,8 +4,8 @@
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go.net/websocket",
-			"Comment": "null-116",
-			"Rev": "89dbba2db2d45f337bb06f974ec45d3c426a5072"
+			"Comment": "null-144",
+			"Rev": "ad01a6fcc8a19d3a4478c836895ffe883bd2ceab"
 		},
 		{
 			"ImportPath": "github.com/hoisie/web",
@@ -14,7 +14,7 @@
 		},
 		{
 			"ImportPath": "github.com/orchestrate-io/gorc",
-			"Rev": "2f9ba83b1b28dccbd6d2718b00f7b567df1bfcaf"
+			"Rev": "f1d1218b5f54fd0c93c57b8a658ff747dff0a8bf"
 		}
 	]
 }
